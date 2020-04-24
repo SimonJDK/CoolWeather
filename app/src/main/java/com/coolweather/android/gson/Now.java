@@ -10,7 +10,7 @@ public class Now {
     public More more;
 
     public class More{
-        @SerializedName("tex")
+        @SerializedName("txt")
         public String info;
     }
 }
