@@ -16,14 +16,13 @@ import com.coolweather.android.util.Utility;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.util.prefs.PreferenceChangeEvent;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class AtuoUpdateService extends Service {
-    public AtuoUpdateService() {
+public class AutoUpdateService extends Service {
+    public AutoUpdateService() {
     }
 
     @Override
@@ -40,7 +39,7 @@ public class AtuoUpdateService extends Service {
         AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);
         int anHour = 60 * 60 * 1000;
         long triggerAtTime = SystemClock.elapsedRealtime() + anHour;
-        Intent i = new Intent(this,AtuoUpdateService.class);
+        Intent i = new Intent(this, AutoUpdateService.class);
         PendingIntent pi = PendingIntent.getService(this,0,i,0);
         manager.cancel(pi);
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,triggerAtTime,pi);
@@ -66,7 +65,7 @@ public class AtuoUpdateService extends Service {
                     final String responseText = response.body().string();
                     final Weather weather = Utility.handleWeatherResponse(responseText);
                     if (weather != null && "ok".equals(weather.status)){
-                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(AtuoUpdateService.this).edit();
+                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(AutoUpdateService.this).edit();
                         editor.putString("weather",responseText);
                         editor.apply();
                     }
@@ -85,7 +84,7 @@ public class AtuoUpdateService extends Service {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String bingPic = response.body().string();
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(AtuoUpdateService.this).edit();
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(AutoUpdateService.this).edit();
                 editor.putString("bing_pic",bingPic);
                 editor.apply();
             }

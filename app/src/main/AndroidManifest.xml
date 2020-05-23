@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <service
-            android:name=".service.AtuoUpdateService"
+            android:name=".service.AutoUpdateService"
             android:enabled="true"
             android:exported="true"></service>
 
